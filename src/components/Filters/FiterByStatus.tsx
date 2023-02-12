@@ -1,10 +1,10 @@
 import { Form } from "react-bootstrap"
 import { Controller, useForm } from "react-hook-form"
-import { useAppDispatch, useAppSelector } from "../hooks/useAppDispatch"
-import { updateStatusFilter } from "../store/slices/transactionsSlice"
-import { DefaultStatus } from "../types/typings"
-import { filterByStatus } from "../utils/filters"
-import Select from "./Select"
+import { useAppDispatch, useAppSelector } from "../../hooks/useAppDispatch"
+import { updateStatusFilter } from "../../store/slices/transactionsSlice"
+import { DefaultStatus } from "../../types/typings"
+import { filterByStatus } from "../../utils/filters"
+import Select from "../Select"
 
 const FilterByStatus = () => {
   const dispatch = useAppDispatch()

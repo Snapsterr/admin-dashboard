@@ -1,4 +1,3 @@
-// import { csvToJSON } from './csvParse';
 import Papa, { ParseResult } from 'papaparse';
 import { TableData } from '../types/typings';
 

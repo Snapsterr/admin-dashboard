@@ -1,6 +1,6 @@
 import { Col, Nav, Row, Tab } from "react-bootstrap"
 import styled from "styled-components"
-import DashboardSection from "./DashboardSection"
+import DashboardTransactions from "./DashboardTransactions"
 
 const MainWrapper = styled.div`
   width: 100%;
@@ -9,6 +9,7 @@ const MainWrapper = styled.div`
 `
 
 const CustomCol = styled(Col)`
+  padding-right: 10px;
   border-right: 1px solid #dadada;
   @media (max-width: 650px) {
     padding-left: 0px;
@@ -30,7 +31,6 @@ const DashboardContent = () => {
               sm={3}
               md={3}
               lg={2}
-              className="overflow-auto p-md-0"
               style={{ borderRight: "1px solid #dadada" }}
             >
               <Nav variant="pills" className="flex-column overflow-hidden">
@@ -44,7 +44,7 @@ const DashboardContent = () => {
             <Col sm={9} md={9} lg={10}>
               <Tab.Content>
                 <Tab.Pane eventKey="first">
-                  <DashboardSection />
+                  <DashboardTransactions />
                 </Tab.Pane>
               </Tab.Content>
             </Col>

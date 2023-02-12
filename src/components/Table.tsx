@@ -1,25 +1,13 @@
 import BTable from "react-bootstrap/Table"
 import { useState } from "react"
 import TableRowContent from "./TableRowContent"
-import { Button, Form, Spinner } from "react-bootstrap"
-import Modal from "./Modal"
+import { Spinner } from "react-bootstrap"
 import { useAppDispatch, useAppSelector } from "../hooks/useAppDispatch"
-import {
-  deleteTransactionField,
-  editTransactionStatus,
-} from "../store/slices/transactionsSlice"
-import Select from "./Select"
-import { filterByStatus } from "../utils/filters"
-import { Controller, useForm } from "react-hook-form"
+import { deleteTransactionField } from "../store/slices/transactionsSlice"
 import styled, { keyframes } from "styled-components"
-import { DefaultStatus, TableData } from "../types/typings"
-
-const Error = styled.div`
-  color: #cd3535;
-  font-size: 12px;
-  line-height: 100%;
-  font-weight: 600;
-`
+import { TableData } from "../types/typings"
+import EditModal from "./Modals/EditModal"
+import DeleteModal from "./Modals/DeleteModal"
 
 const SpinnerWrapper = styled.div`
   position: relative;
@@ -45,7 +33,6 @@ const MidPageSpinner = styled(Spinner)`
   transform: translate(-50%, -50%) rotate(0deg);
   animation: ${spin} 0.75s linear infinite;
 `
-
 interface Props {
   transactions: TableData[]
 }
@@ -60,7 +47,6 @@ const Table = ({ transactions }: Props) => {
   const [isEditShow, setIsEditShow] = useState<boolean>(false)
   const [isDeleteShow, setIsDeleteShow] = useState<boolean>(false)
   const [rowIndex, setRowIndex] = useState<number>(0)
-  const [selectEmpty, setSelectEmpty] = useState<boolean>(false)
 
   const dataPerPage = 10
 
@@ -81,18 +67,12 @@ const Table = ({ transactions }: Props) => {
     setRowIndex(0)
   }
 
-  const { handleSubmit, control, reset } = useForm({
-    defaultValues: { status: "" },
-  })
-
-  const onSubmitHandler = (data: DefaultStatus) => {
-    setSelectEmpty(false)
-    console.log(data, rowIndex)
-    const { status } = data
-    if (status === "") return setSelectEmpty(true)
-    dispatch(editTransactionStatus({ id: rowIndex, status }))
-    reset()
+  const closeEditModal = () => {
     setIsEditShow(false)
+  }
+
+  const closeDeleteModal = () => {
+    setIsDeleteShow(false)
   }
 
   if (isLoading)
@@ -137,69 +117,17 @@ const Table = ({ transactions }: Props) => {
             ))}
         </tbody>
       </BTable>
-      {isEditShow ? (
-        <Modal modalHeading="Edit field?" onHide={() => setIsEditShow(false)}>
-          <Form onSubmit={handleSubmit(onSubmitHandler)}>
-            <Form.Label className="mt-1 mb-3">
-              Change transaction status to:
-            </Form.Label>
-            <Controller
-              control={control}
-              name="status"
-              render={({ field: { onChange, value } }) => (
-                <Select
-                  options={filterByStatus}
-                  onChange={onChange}
-                  selectPlaceholder="Status"
-                  value={value}
-                />
-              )}
-            />
-            <Error>{selectEmpty ? "*Select status" : null}</Error>
-            <Form.Group className="d-flex justify-content-between mt-5">
-              <Button type="submit" variant="outline-success">
-                Save changes
-              </Button>
-              <Button
-                onClick={() => setIsEditShow(false)}
-                variant="outline-danger"
-              >
-                Decline
-              </Button>
-            </Form.Group>
-          </Form>
-        </Modal>
-      ) : null}
-      {isDeleteShow ? (
-        <Modal
-          modalHeading="Delete field?"
-          onHide={() => setIsDeleteShow(false)}
-        >
-          <Form className="d-flex flex-column">
-            <Form.Label className="text-center mt-4">
-              Do you really want to delete this field?
-            </Form.Label>
-            <Form.Group className="d-flex justify-content-between mt-4 gap-5">
-              <Button
-                className="w-50"
-                variant="outline-danger"
-                size="sm"
-                onClick={() => deleteField(rowIndex)}
-              >
-                Yes
-              </Button>
-              <Button
-                className="w-50"
-                variant="outline-secondary"
-                size="sm"
-                onClick={() => setIsDeleteShow(false)}
-              >
-                No
-              </Button>
-            </Form.Group>
-          </Form>
-        </Modal>
-      ) : null}
+      <EditModal
+        isEditShow={isEditShow}
+        rowIndex={rowIndex}
+        onHide={closeEditModal}
+      />
+      <DeleteModal
+        isDeleteShow={isDeleteShow}
+        rowIndex={rowIndex}
+        onHide={closeDeleteModal}
+        deleteField={deleteField}
+      />
     </>
   )
 }

@@ -12,6 +12,7 @@ const PaginationWrapper = styled(Pagination)`
 
   @media (max-width: 575px) {
     margin-top: 50px;
+    margin-bottom: 20px;
   }
 `
 
@@ -61,7 +62,7 @@ const PaginationComponent = ({ itemsCount, alwaysShown = true }: Props) => {
     const isPageNumberFirst = pageNumberAct === 1
     const isPageNumberLast = pageNumberAct === pagesCount
     const isCurrentPageWithinOnePageNumbers =
-      Math.abs(pageNumberAct - pageNumber) <= 2
+      Math.abs(pageNumberAct - pageNumber) <= 1
 
     if (
       isPageNumberFirst ||

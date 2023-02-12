@@ -4,8 +4,8 @@ import Table from "./Table"
 import PaginationComponent from "./CustomPagination"
 import { useAppDispatch, useAppSelector } from "../hooks/useAppDispatch"
 import { getTransactionsFetch } from "../store/slices/transactionsSlice"
-import FilterByStatus from "./FiterByStatus"
-import FilterByType from "./FilterByType"
+import FilterByStatus from "./Filters/FiterByStatus"
+import FilterByType from "./Filters/FilterByType"
 import FileManipulateButtons from "./FileManipulateButtons"
 import { filterData } from "../utils/filterData"
 import styled from "styled-components"
@@ -37,7 +37,7 @@ const Controls = styled.div`
   }
 `
 
-const DashboardSection = () => {
+const DashboardTransactions = () => {
   const dispatch = useAppDispatch()
 
   const transactions = useAppSelector((state) => {
@@ -71,4 +71,4 @@ const DashboardSection = () => {
   )
 }
 
-export default DashboardSection
+export default DashboardTransactions
