@@ -5,13 +5,15 @@ import { combineReducers, configureStore, getDefaultMiddleware } from '@reduxjs/
 
 import transactionsSaga from './sagas/transactionsSaga'
 import transactionsSlice from './slices/transactionsSlice'
+// import authSlice from './slices/authSlice'
 
 const rootReducer = combineReducers({
-  transactionsSlice
+  transactionsSlice,
+  // authSlice
 })
 
 function* RootSaga() {
-  yield all([fork(transactionsSaga)])
+  yield fork(transactionsSaga)
 }
 
 const sagaMiddleware = saga()

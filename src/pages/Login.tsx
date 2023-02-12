@@ -1,7 +1,10 @@
 import React, { useState } from "react"
 import { Button, Container, Form } from "react-bootstrap"
 import { SubmitHandler, useForm } from "react-hook-form"
+import { Navigate, useNavigate } from "react-router"
 import styled from "styled-components"
+import { useAppDispatch } from "../hooks/useAppDispatch"
+// import { setUser } from "../store/slices/authSlice"
 
 interface Inputs {
   username: string
@@ -13,11 +16,26 @@ const Background = styled.div`
 `
 
 const LoginContainer = styled(Container)`
-  min-width: 300px;
-  max-width: 40%;
+  // min-width: 300px;
+  width: 100%;
+  max-width: 700px;
+`
+
+const FormWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  padding: 20px;
+
+  @media (max-width: 575px) {
+    padding: 10px;
+  }
 `
 
 const Login = () => {
+  const dispatch = useAppDispatch()
+
+  const navigate = useNavigate()
+
   const [login, setLogin] = useState(false)
 
   const {
@@ -27,16 +45,21 @@ const Login = () => {
   } = useForm<Inputs>()
   const onSubmit: SubmitHandler<Inputs> = async ({ username, password }) => {
     console.log(username, password)
+    //prelogin
+    if (username && password) return navigate("/dashboard")
   }
   return (
     <Background className="bg-dark position-relative d-flex align-items-center">
       <LoginContainer>
-        <div className="flex align-items-center p-4">
+        <FormWrapper>
           <Form
             className="w-100 d-flex flex-column justify-content-start align-items-start"
             onSubmit={handleSubmit(onSubmit)}
           >
-            <Form.Label className="w-100 text-center mb-4 text-white h1">
+            <Form.Label
+              className="w-100 text-center mb-4 text-white h1"
+              style={{ fontSize: "3rem" }}
+            >
               Login
             </Form.Label>
             <Form.Group className="mb-3 w-100" controlId="formBasicUsername">
@@ -47,8 +70,8 @@ const Login = () => {
                 {...register("username", { required: true })}
               />
               {errors.username && (
-                <p className="p-1 text-[13px] font-light text-orange-500">
-                  Please enter a valid username
+                <p className="p-1 text-[13px] font-light text-orange-500 text-danger">
+                  *Please enter a valid username
                 </p>
               )}
             </Form.Group>
@@ -61,8 +84,8 @@ const Login = () => {
                 {...register("password", { required: true })}
               />
               {errors.password && (
-                <p className="p-1 text-[13px] font-light text-orange-500">
-                  Please enter a valid password
+                <p className="p-1 text-[13px] font-light text-orange-500 text-danger">
+                  *Please enter a valid password
                 </p>
               )}
             </Form.Group>
@@ -70,7 +93,7 @@ const Login = () => {
               Submit
             </Button>
           </Form>
-        </div>
+        </FormWrapper>
       </LoginContainer>
     </Background>
   )
