@@ -3,7 +3,7 @@ Admin dashboard with transactions. Test task on Legiosoft
 &nbsp;
 
 <strong>Link to Vercel:</strong>
-<strong><a href="https://admin-dashboard-five-rho.vercel.app/dashboard">Admin dashboard with transactions</a></strong>
+<strong><a href="https://admin-dashboard-five-rho.vercel.app/">Admin dashboard with transactions</a></strong>
 
 &nbsp;
 
