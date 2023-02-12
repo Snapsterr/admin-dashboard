@@ -24,13 +24,13 @@ const NavMenu = () => {
       className="w-100"
     >
       <Container fluid>
-        <Navbar.Brand href="https://legiosoft.net">Logisoft</Navbar.Brand>
+        <Navbar.Brand href="https://legiosoft.net">Legiosoft</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" className="w-full" />
         <Navbar.Collapse id="basic-navbar-nav" className="text-center">
           <Nav className="me-auto" activeKey={pathname}>
-            <NavLink className="nav-link" to="/">
+            <Nav.Link className="nav-link" href="https://legiosoft.net">
               Home
-            </NavLink>
+            </Nav.Link>
             <NavLink className="nav-link" to="/dashboard">
               Dashboard
             </NavLink>
