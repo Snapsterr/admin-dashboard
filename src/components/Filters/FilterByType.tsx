@@ -2,7 +2,6 @@ import { Form } from "react-bootstrap"
 import { Controller, useForm } from "react-hook-form"
 import { useAppDispatch, useAppSelector } from "../../hooks/useAppDispatch"
 import { updateTypeFilter } from "../../store/slices/transactionsSlice"
-import { DefaultType } from "../../types/typings"
 import { filterByType } from "../../utils/filters"
 import Select from "../Select"
 
