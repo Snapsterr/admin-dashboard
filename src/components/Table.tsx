@@ -5,7 +5,6 @@ import { Spinner } from "react-bootstrap"
 import { useAppDispatch, useAppSelector } from "../hooks/useAppDispatch"
 import { deleteTransactionField } from "../store/slices/transactionsSlice"
 import styled, { keyframes } from "styled-components"
-import { TableData } from "../types/typings"
 import EditModal from "./Modals/EditModal"
 import DeleteModal from "./Modals/DeleteModal"
 
@@ -34,7 +33,7 @@ const MidPageSpinner = styled(Spinner)`
   animation: ${spin} 0.75s linear infinite;
 `
 interface Props {
-  transactions: TableData[]
+  transactions: Transaction[]
 }
 
 const Table = ({ transactions }: Props) => {

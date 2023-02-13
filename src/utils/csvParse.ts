@@ -1,5 +1,4 @@
-import Papa, { ParseResult } from 'papaparse';
-import { TableData } from '../types/typings';
+import Papa, { ParseResult } from 'papaparse'
 
 export const csvToJsonString = (str: string) => {
 	let results: string[][] = []
@@ -33,7 +32,7 @@ export const csvToJsonFile = (file: File) => {
 	return results
 }
 
-export const jsonToCsv = (json: TableData[]) => {
+export const jsonToCsv = (json: Transaction[]) => {
   const result = Papa.unparse(json, {
     quotes: false, //or array of booleans
     quoteChar: '"',

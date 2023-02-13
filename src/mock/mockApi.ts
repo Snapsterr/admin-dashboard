@@ -1,7 +1,7 @@
 // import { nanoid } from "@reduxjs/toolkit";
 import axios from "axios"
 import MockAdapter from "axios-mock-adapter"
-import { mockData } from "./mockData";
+import { mockData } from "./mockData"
 
 // const token = nanoid()
 

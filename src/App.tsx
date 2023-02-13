@@ -8,8 +8,8 @@ function App() {
     <Routes>
       <Route path="/dashboard" element={<Dashboard />} />
       <Route path="/login" element={<Login />} />
+      <Route path="/" element={<Navigate to="/login" replace />} />
       <Route path="*" element={<Error />} />
-      <Route path="/" element={<Navigate to="/dashboard" replace />} />
     </Routes>
   )
 }

@@ -3,12 +3,11 @@ import { Button, Form } from "react-bootstrap"
 import { jsonToCsv } from "../utils/csvParse"
 import { downloadLinkCsv } from "../utils/downloadLink"
 import Papa, { ParseResult } from "papaparse"
-import { TableData } from "../types/typings"
 import { useAppDispatch } from "../hooks/useAppDispatch"
 import { updateTransactions } from "../store/slices/transactionsSlice"
 
 interface Props {
-  transactions: TableData[]
+  transactions: Transaction[]
 }
 
 const FileManipulateButtons = ({ transactions }: Props) => {
@@ -27,7 +26,7 @@ const FileManipulateButtons = ({ transactions }: Props) => {
       header: true,
       delimiter: ",",
       newline: "\n",
-      complete: async function (res: ParseResult<TableData>) {
+      complete: async function (res: ParseResult<Transaction>) {
         const data = res.data
         dispatch(updateTransactions(data))
       },

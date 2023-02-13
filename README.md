@@ -14,6 +14,7 @@ Admin dashboard with transactions. Test task on Legiosoft
 - Redux Toolkit
 - Redux saga
 - React Router
+- Redux Persist
 - React Hook Form
 - React Bootstrap
 - Styled Components

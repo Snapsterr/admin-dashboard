@@ -1,15 +1,9 @@
-import React, { useState } from "react"
 import { Button, Container, Form } from "react-bootstrap"
 import { SubmitHandler, useForm } from "react-hook-form"
-import { Navigate, useNavigate } from "react-router"
+import { Navigate, redirect, useNavigate } from "react-router"
+import { useAppDispatch, useAppSelector } from "../hooks/useAppDispatch"
+import { loginUser } from "../store/slices/authSlice"
 import styled from "styled-components"
-import { useAppDispatch } from "../hooks/useAppDispatch"
-// import { setUser } from "../store/slices/authSlice"
-
-interface Inputs {
-  username: string
-  password: string
-}
 
 const Background = styled.div`
   height: 100vh;
@@ -34,20 +28,28 @@ const FormWrapper = styled.div`
 const Login = () => {
   const dispatch = useAppDispatch()
 
+  const { isLogin, user } = useAppSelector((state) => state.persistedReducer)
+
   const navigate = useNavigate()
 
-  const [login, setLogin] = useState(false)
+  const fieldValidationRegex = /(?=[A-Za-z0-9])/
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<Inputs>()
-  const onSubmit: SubmitHandler<Inputs> = async ({ username, password }) => {
+  } = useForm<User>()
+  const onSubmit: SubmitHandler<User> = async ({ username, password }) => {
     console.log(username, password)
     //prelogin
-    if (username && password) return navigate("/dashboard")
+    if (!username && !password) return null
+
+    dispatch(loginUser({ username, password }))
+    navigate("/dashboard")
   }
+
+  if (isLogin) return <Navigate to="/dashboard" replace />
+
   return (
     <Background className="bg-dark position-relative d-flex align-items-center">
       <LoginContainer>
@@ -67,11 +69,16 @@ const Login = () => {
               <Form.Control
                 type="text"
                 placeholder="Enter username"
-                {...register("username", { required: true })}
+                {...register("username", {
+                  required: true,
+                  minLength: 6,
+                  maxLength: 20,
+                  pattern: fieldValidationRegex,
+                })}
               />
               {errors.username && (
                 <p className="p-1 text-[13px] font-light text-orange-500 text-danger">
-                  *Please enter a valid username
+                  *Please enter a valid username(6-20 latin letters or numbers)
                 </p>
               )}
             </Form.Group>
@@ -81,11 +88,16 @@ const Login = () => {
               <Form.Control
                 type="password"
                 placeholder="Password"
-                {...register("password", { required: true })}
+                {...register("password", {
+                  required: true,
+                  minLength: 8,
+                  maxLength: 20,
+                  pattern: fieldValidationRegex,
+                })}
               />
               {errors.password && (
                 <p className="p-1 text-[13px] font-light text-orange-500 text-danger">
-                  *Please enter a valid password
+                  *Please enter a valid password(8-20 latin letters or numbers)
                 </p>
               )}
             </Form.Group>

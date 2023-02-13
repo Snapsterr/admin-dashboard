@@ -1,8 +1,7 @@
 import { Button } from "react-bootstrap"
-import { TableData } from "../types/typings"
 
 interface Props {
-  row: TableData
+  row: Transaction
   showDeleteModal: (id: number) => void
   showEditModal: (id: number) => void
   id: number

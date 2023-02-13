@@ -1,6 +1,4 @@
-import { TableData } from "../types/typings"
-
-export const filterData = (arr: TableData[], status: string, type: string): TableData[] => {
+export const filterData = (arr: Transaction[], status: string, type: string): Transaction[] => {
   if (status === '' && type === '') return arr
   const filtered = arr.filter((item) => {
     if (status.length && type.length) {

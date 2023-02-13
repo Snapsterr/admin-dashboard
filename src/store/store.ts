@@ -1,15 +1,24 @@
 import saga from 'redux-saga'
-import { all, fork } from 'redux-saga/effects'
+import { fork } from 'redux-saga/effects'
 
-import { combineReducers, configureStore, getDefaultMiddleware } from '@reduxjs/toolkit'
+import { combineReducers, configureStore } from '@reduxjs/toolkit'
 
 import transactionsSaga from './sagas/transactionsSaga'
 import transactionsSlice from './slices/transactionsSlice'
-// import authSlice from './slices/authSlice'
+import authSlice from './slices/authSlice'
+import storage from 'redux-persist/lib/storage'
+import { persistReducer, persistStore } from 'redux-persist';
+
+const persistConfig = {
+  key: 'root',
+  storage,
+}
+
+const persistedReducer = persistReducer(persistConfig, authSlice)
 
 const rootReducer = combineReducers({
   transactionsSlice,
-  // authSlice
+  persistedReducer
 })
 
 function* RootSaga() {
@@ -18,7 +27,7 @@ function* RootSaga() {
 
 const sagaMiddleware = saga()
 
-const store = configureStore({
+export const store = configureStore({
   reducer: rootReducer,
   middleware: (getDefaultMiddleware) => getDefaultMiddleware({
     serializableCheck: false,
@@ -32,4 +41,4 @@ sagaMiddleware.run(RootSaga)
 export type RootState = ReturnType<typeof store.getState>
 export type AppDispatch = typeof store.dispatch
 
-export default store
+export const persistor = persistStore(store)

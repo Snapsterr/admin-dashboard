@@ -1,19 +1,4 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
-import { TableData } from "../../types/typings"
-
-interface EditStatus {
-  id: number
-  status: string
-}
-
-interface TransactionsState {
-  transactions: TableData[]
-  isLoading: boolean
-  error: string
-  statusFilter: string
-  typeFilter: string
-  pageNumber: number
-}
 
 const initialState: TransactionsState = {
   transactions: [],
@@ -32,7 +17,7 @@ export const transactionsSlice = createSlice({
     getTransactionsFetch: (state) => {
       state.isLoading = true
     },
-    getTransactionsSuccess: (state, action: PayloadAction<TableData[]>) => {
+    getTransactionsSuccess: (state, action: PayloadAction<Transaction[]>) => {
       state.transactions = action.payload
       state.isLoading = false
     },
@@ -56,7 +41,7 @@ export const transactionsSlice = createSlice({
       state.transactions[index].Status = action.payload.status
     },
 
-    updateTransactions: (state, action: PayloadAction<TableData[]>) => {
+    updateTransactions: (state, action: PayloadAction<Transaction[]>) => {
       state.transactions = action.payload
       state.pageNumber = 1
       state.statusFilter = ''
