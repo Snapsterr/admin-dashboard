@@ -4,6 +4,7 @@ import { Link, NavLink } from "react-router-dom"
 import styled from "styled-components"
 import { useAppDispatch } from "../hooks/useAppDispatch"
 import { logoutUser } from "../store/slices/authSlice"
+import { resetState } from "../store/slices/transactionsSlice"
 
 const DangerLink = styled(Link)`
   border-radius: 5px;
@@ -17,6 +18,11 @@ const DangerLink = styled(Link)`
 const NavMenu = () => {
   const dispatch = useAppDispatch()
   const { pathname } = useLocation()
+
+  const logoutHandler = () => {
+    dispatch(logoutUser())
+    dispatch(resetState())
+  }
 
   return (
     <Navbar
@@ -42,7 +48,7 @@ const NavMenu = () => {
             <DangerLink
               className="nav-link"
               to="/login"
-              onClick={() => dispatch(logoutUser())}
+              onClick={logoutHandler}
             >
               Logout
             </DangerLink>

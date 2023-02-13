@@ -61,12 +61,20 @@ export const transactionsSlice = createSlice({
     setPageNum: (state, action: PayloadAction<number>) => {
       state.pageNumber = action.payload
     },
+    resetState: (state) => {
+      state.transactions = []
+      state.isLoading = false
+      state.statusFilter = ''
+      state.typeFilter = ''
+      state.pageNumber = 1
+      state.error = ''
+    }
   },
 })
 
 
 export const { getTransactionsFetch, getTransactionsSuccess, getTransactionsFailure, 
   deleteTransactionField, editTransactionStatus, updateTransactions, updateStatusFilter, 
-  updateTypeFilter, setPageNum} = transactionsSlice.actions
+  updateTypeFilter, setPageNum, resetState} = transactionsSlice.actions
 
 export default transactionsSlice.reducer
