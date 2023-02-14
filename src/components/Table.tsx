@@ -105,10 +105,10 @@ const Table = ({ transactions }: Props) => {
         <tbody>
           {transactions
             .slice(dataPerPage * (pageNumber - 1), dataPerPage * pageNumber)
-            .map((item, id) => (
+            .map((item) => (
               <TableRowContent
                 row={item}
-                key={id}
+                key={item.TransactionId}
                 id={item.TransactionId}
                 showEditModal={showEditModal}
                 showDeleteModal={showDeleteModal}
